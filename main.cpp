@@ -27,10 +27,9 @@ int main()
 	ele.GetInChildren(13)->GetInChildren(420)->AppendChild(new Element(4200,"BlazzzzzIt"));
 	ele.GetInChildren(13)->GetInChildren(420)->AppendChild(new Element(4201,"BlazzzzzIt"));
 	ele.GetInChildren(13)->AppendChild(new Element(42, "The Answer"));
-	ele.ShowTree();
 
 	cout << endl <<
-	"Avalilable commands are:"	<<endl<<
+	"Usage:"	<<endl<<
 	"pwd," 				<<endl<<
 	"ls,"				<<endl<<
 	"cd [parent|<node id>],"	<<endl<<
