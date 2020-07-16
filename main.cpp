@@ -5,9 +5,11 @@ using namespace std;
 
 class Element
 {
-	public:
+	private:
 	int id;
 	string data;
+
+	public:
 	vector<Element*> child;
 
 	Element()
@@ -21,9 +23,17 @@ class Element
 		this->data=data;
 	}
 
+	void Rename(string newName)
+	{
+		this->data=newName;
+	}
+
 	void AppendChild(Element* elmt)
 	{
-		this->child.push_back(elmt);
+		if( this->GetInChildren(elmt->id) != NULL )
+			cout<<"Element with id "<<elmt->id<<" already exists"<<endl;
+		else
+			this->child.push_back(elmt);
 	}
 
 	void Show(int depth=0)
@@ -48,8 +58,6 @@ class Element
 				return this->child[i];
 			}
 		}
-		cout<<"Not found ID: "<<id<<endl<<"Exiting"<<endl;
-		exit(1);
 		return NULL;
 	}
 };
@@ -71,7 +79,7 @@ int main()
 	}
 
 	cout<<endl<<"~~ Modifying data in 13 element ~~"<<endl;
-	ele.GetInChildren(13)->data="Thirteen";
+	ele.GetInChildren(13)->Rename("Thirteen");
 
 	cout<<endl<<"~~ Show ~~"<<endl;
 	ele.Show();
@@ -84,6 +92,12 @@ int main()
 
 	cout<<endl<<"~~ Adding 420 : \"Blazit\" to 13 ~~"<<endl;
 	ele.GetInChildren(13)->AppendChild(new Element(420,"BlazeIt"));
+
+	cout<<endl<<"~~ Adding 4200 : \"Blazzzzit\" to 420 : \"Blazit\" THRICE ~~"<<endl;
+	ele.GetInChildren(13)->GetInChildren(420)->AppendChild(new Element(420,"BlazzzzzIt"));
+	ele.GetInChildren(13)->GetInChildren(420)->AppendChild(new Element(4200,"BlazzzzzIt"));
+	ele.GetInChildren(13)->GetInChildren(420)->AppendChild(new Element(4200,"BlazzzzzIt"));
+	ele.GetInChildren(13)->GetInChildren(420)->AppendChild(new Element(4202,"BlazzzzzIt"));
 
 	cout<<endl<<"~~ Adding 42 : \"The Answer\" to 13 ~~"<<endl;
 	ele.GetInChildren(13)->AppendChild(new Element(42, "The Answer"));
