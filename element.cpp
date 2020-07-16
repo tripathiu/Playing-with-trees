@@ -34,8 +34,9 @@ void Element::ShowTree(int depth)
 	this->ShowElement();
 	for(int i=0; i<numChild; i++)
 	{
-		for(int j=0; j<=depth; j++) cout<<"--";
-		cout<<" ";
+		for(int j=0; j<depth; j++) cout<<"│ ";
+		if(i < numChild-1) cout<<"├─";
+		else cout<<"└─";
 		this->child[i]->ShowTree(depth+1);
 	}
 }
