@@ -11,13 +11,19 @@ class Element
 
 	public:
 	vector<Element*> child;
+	Element* parent;
 
 	Element();
 	Element(int newId, string data);
 
-	void Rename(string newName);
 	void AppendChild(Element* elmt);
-	void Show(int depth=0);
+	void ShowTree(int depth=0); // Recursively show tree
+	void ShowElement(); // Show just the element
 	Element* GetInChildren(int id);
+
+	int getId();
+	string getData();
+	void setId(int id);
+	void setData(string data);
 };
 
