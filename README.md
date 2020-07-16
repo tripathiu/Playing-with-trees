@@ -2,7 +2,7 @@
 
 Is there anything more to be said?
 
-# Try it out...
+## Try it out...
 
 1. Clone the repository.
 1. Run `./build.sh`
@@ -14,3 +14,10 @@ Is there anything more to be said?
 * `cd`
 * `touch`
 * `exit`
+
+## More commands coming soon...
+
+* `rm`
+* `mv`
+
+...and many more... (maybe...)
