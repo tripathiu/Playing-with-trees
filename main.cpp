@@ -43,7 +43,8 @@ int main()
 	ele.GetInChildren(13)->GetInChildren(420)->AppendChild(new Element(4202,"BlazzzzzIt"));
 
 	cout<<endl<<"~~ Parent of 0/13/420 ~~"<<endl;
-	ele.GetInChildren(13)->GetInChildren(420)->parent->ShowElement();
+	Element* eblazeit = ele.GetInChildren(13)->GetInChildren(420);
+	eblazeit->parent->ShowElement();
 
 	cout<<endl<<"~~ Adding 42 : \"The Answer\" to 13 ~~"<<endl;
 	ele.GetInChildren(13)->AppendChild(new Element(42, "The Answer"));
