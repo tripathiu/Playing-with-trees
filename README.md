@@ -2,6 +2,8 @@
 
 Is there anything more to be said?
 
+![](demo.gif)
+
 ## Try it out...
 
 1. Clone the repository.
