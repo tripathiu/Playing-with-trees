@@ -1,62 +1,99 @@
 #include <iostream>
+#include <algorithm>
 #include <vector>
 #include "element.hpp"
 
 using namespace std;
 
+bool isNumber(const std::string& s)
+{
+	return !s.empty() &&
+		find_if(s.begin(), s.end(), [](unsigned char c) { return !isdigit(c); }) == s.end();
+}
+
 int main()
 {
 	Element ele(0,"Zero");
 
-	cout<<endl<<"~~ Show ~~"<<endl<<endl;
-	ele.ShowTree();
-
-	cout<<endl<<"~~ Adding new 13 element ~~"<<endl;
 	ele.AppendChild(new Element(13,"Not Thirteen"));
-
-	cout<<endl<<"~~ Adding 3 dummy emelents ~~"<<endl;
 	for(int i=0; i<3; i++)
 	{
 		ele.AppendChild(new Element(i,"Dummy"));
 	}
-
-	cout<<endl<<"~~ Modifying data in 13 element ~~"<<endl;
 	ele.GetInChildren(13)->setData("Thirteen");
-
-	cout<<endl<<"~~ Show ~~"<<endl;
-	ele.ShowTree();
-
-	cout<<endl<<"~~ Appending new element ~~"<<endl;
 	ele.AppendChild(new Element(666,"Number of the beast"));
-
-	cout<<endl<<"~~ Show ~~"<<endl;
-	ele.ShowTree();
-
-	cout<<endl<<"~~ Adding 420 : \"Blazit\" to 13 ~~"<<endl;
 	ele.GetInChildren(13)->AppendChild(new Element(420,"BlazeIt"));
-
-	cout<<endl<<"~~ Adding 4200 : \"Blazzzzit\" to 420 : \"Blazit\" THRICE ~~"<<endl;
 	ele.GetInChildren(13)->GetInChildren(420)->AppendChild(new Element(420,"BlazzzzzIt"));
 	ele.GetInChildren(13)->GetInChildren(420)->AppendChild(new Element(4200,"BlazzzzzIt"));
-	// This will not append the child as a child with the same id already exists
 	ele.GetInChildren(13)->GetInChildren(420)->AppendChild(new Element(4200,"BlazzzzzIt"));
 	ele.GetInChildren(13)->GetInChildren(420)->AppendChild(new Element(4202,"BlazzzzzIt"));
-
-	cout<<endl<<"~~ Parent of 0/13/420 ~~"<<endl;
-	Element* eblazeit = ele.GetInChildren(13)->GetInChildren(420);
-	eblazeit->parent->ShowElement();
-
-	cout<<endl<<"~~ Adding 42 : \"The Answer\" to 13 ~~"<<endl;
 	ele.GetInChildren(13)->AppendChild(new Element(42, "The Answer"));
-
-	cout<<endl<<"~~ Show 13 from a.GetInChildren(13) ~~"<<endl;
-	ele.GetInChildren(13)->ShowTree();
-	
-	cout<<endl<<"~~ Parent of id 13 ~~"<<endl;
-	ele.GetInChildren(13)->parent->ShowElement();
-
-	cout<<endl<<"~~ Show ~~"<<endl;
 	ele.ShowTree();
+
+	cout << endl <<
+	"Avalilable commands are:"	<<endl<<
+	"pwd," 				<<endl<<
+	"ls,"				<<endl<<
+	"cd [parent|<node id>],"	<<endl<<
+	"touch <node id> <node data>"	<<endl<<
+	"exit"<<endl<<endl;
+
+	string cmd;
+	string token;
+	string delimiter=" ";
+	Element* curEle;
+	curEle = &ele;
+
+	while(1)
+	{
+		cout<<endl<<"> ";
+		getline(cin,cmd);
+		token = cmd.substr(0, cmd.find(delimiter));
+		if( token == "ls")
+		{
+			curEle->ShowTree();
+		}
+		if( token == "pwd")
+		{
+			curEle->ShowElement();
+		}
+		if( token == "exit")
+		{
+			exit(0);
+		}
+		if (token == "cd")
+		{
+			cmd.erase(0, cmd.find(delimiter) + delimiter.length());
+			token = cmd.substr(0, cmd.find(delimiter));
+			if (isNumber(token))
+			{
+				if ( curEle->GetInChildren(stoi(token)) != NULL )
+					curEle = curEle->GetInChildren(stoi(token));
+				else
+					cout<<"Node does not exist"<<endl;
+			}
+			else if (token == "..")
+				curEle = curEle->parent;
+			curEle->ShowElement();
+		}
+		if (token == "touch")
+		{
+			cmd.erase(0, cmd.find(delimiter) + delimiter.length());
+			token = cmd.substr(0, cmd.find(delimiter));
+			cmd.erase(0, cmd.find(delimiter) + delimiter.length());
+			if (isNumber(token))
+			{
+				if ( curEle->GetInChildren(stoi(token)) == NULL )
+				{
+					curEle->AppendChild(new Element(stoi(token),cmd.substr(0, cmd.find(delimiter))));
+				}
+				else
+					cout<<"Node "<<stoi(token)<<" exists"<<endl;
+			}
+			curEle->ShowElement();
+		}
+	}
+
 
 	return 0;
 }
