@@ -25,8 +25,7 @@ int main()
 	ele.GetInChildren(13)->AppendChild(new Element(420,"BlazeIt"));
 	ele.GetInChildren(13)->GetInChildren(420)->AppendChild(new Element(420,"BlazzzzzIt"));
 	ele.GetInChildren(13)->GetInChildren(420)->AppendChild(new Element(4200,"BlazzzzzIt"));
-	ele.GetInChildren(13)->GetInChildren(420)->AppendChild(new Element(4200,"BlazzzzzIt"));
-	ele.GetInChildren(13)->GetInChildren(420)->AppendChild(new Element(4202,"BlazzzzzIt"));
+	ele.GetInChildren(13)->GetInChildren(420)->AppendChild(new Element(4201,"BlazzzzzIt"));
 	ele.GetInChildren(13)->AppendChild(new Element(42, "The Answer"));
 	ele.ShowTree();
 
